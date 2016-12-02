@@ -1,0 +1,1 @@
+<footer> 2016 &copy; Mofree.org &nbsp;&nbsp;<a href="http://www.mofree.org">Mofree</a> &middot; <a href="http://www.haosoft.org">HaoSoft</a></footer>
