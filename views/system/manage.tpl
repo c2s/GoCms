@@ -18,13 +18,13 @@
     <!-- header section end-->
     <!-- page heading start-->
     <div class="page-heading">
-      <h3> 模块管理 </h3>
+      <h3> 菜单管理 </h3>
       <ul class="breadcrumb pull-left">
         <li> <a href="/user/show/{{.LoginUserid}}">首页</a> </li>
-        <li> <a href="/module/manage">模块管理</a> </li>
+        <li> <a href="/module/manage">菜单管理</a> </li>
         <li class="active"> 项目 </li>
       </ul>
-      <div class="pull-right"><a href="/module/add" class="btn btn-success">+新模块</a></div>
+      <div class="pull-right"><a href="/module/add" class="btn btn-success">+新菜单</a></div>
     </div>
     <!-- page heading end-->
     <!--body wrapper start-->
@@ -41,9 +41,10 @@
                   <table class="table table-bordered table-striped table-condensed">
                     <thead>
                       <tr>
-                        <th>模块名称</th>
-                        <th>模块英文名</th>
+                        <th>菜单名称</th>
+                        <th>菜单英文名</th>
 						<th>访问地址</th>
+						<th>图标</th>
                         <th>排序</th>
                         <th>状态</th>
                         <th>操作</th>
@@ -56,13 +57,14 @@
                       <td>{{$v.Name}}</td>
                       <td>{{$v.Ename}}</td>
                       <td>{{$v.Url}}</td>
+                      <td>{{$v.Icons}}</td>
                       <td>{{$v.Sort}}</td>
                       <td>{{$v.Status}}</td>
                       <td>{{getDate $v.Created}}</td>
                       <td><div class="btn-group">
                           <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 操作<span class="caret"></span> </button>
                           <ul class="dropdown-menu">
-                            <li><a href="/project/edit/{{$v.Id}}">编辑</a></li>
+                            <li><a href="/module/edit/{{$v.Id}}">编辑</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="javascript:;" class="js-project-single" data-id="{{$v.Id}}" data-status="1">删除</a></li>
                           </ul>

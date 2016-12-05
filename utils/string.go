@@ -11,6 +11,8 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/zheng-ji/goSnowFlake"
+	"time"
+	Mrand "math/rand"
 )
 
 /*
@@ -102,4 +104,9 @@ func SnowFlakeId() int64 {
 	} else {
 		return id
 	}
+}
+
+func GenerateUuid() int {
+	r := Mrand.New(Mrand.NewSource(time.Now().UnixNano()))
+	return r.Intn(100)
 }

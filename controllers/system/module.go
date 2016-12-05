@@ -1,3 +1,8 @@
+// Copyright 2016 GoCms Author. All Rights Reserved.
+// Author Mofree<mofree@mofree.org>
+// Licensed under the Apache License, Version 2.0 (the "License");
+// license that can be found in the LICENSE file.
+
 package system
 
 import (
@@ -7,9 +12,7 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
-	"fmt"
-	"GoCms/utils"
-	"log"
+	"strconv"
 )
 
 type MyModuleController struct {
@@ -103,25 +106,124 @@ func (this *AddModuleController) Post() {
 		this.ServeJSON()
 		return
 	}
-	var err error
-	//雪花算法ID生成
-	id := utils.SnowFlakeId()
 
-	log.Print(id)
+	Icons := this.GetString("Icons")
+	if "" == Icons {
+		this.Data["json"] = map[string]interface{}{"code": 0, "message": "请填写Icons"}
+		this.ServeJSON()
+		return
+	}
+
+	var err error
 
 	var data Module
-	data.Id  = id
 	data.Name  = Name
 	data.Ename = Ename
 	data.Url   = Url
+	data.Icons = Icons
 	data.Sort  = Sort
 
 	err = AddModule(data)
 
 	if err == nil {
-		this.Data["json"] = map[string]interface{}{"code": 1, "message": "模块添加成功", "id": fmt.Sprintf("%d", id)}
+		this.Data["json"] = map[string]interface{}{"code": 1, "message": "模块添加成功"}
 	} else {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "模块添加失败"}
+	}
+	this.ServeJSON()
+}
+
+
+type EditModuleController struct {
+	controllers.BaseController
+}
+
+func (this *EditModuleController) Get() {
+	//权限检测
+	if !strings.Contains(this.GetSession("userPermission").(string), "project-edit") {
+		this.Abort("401")
+	}
+	idstr := this.Ctx.Input.Param(":id")
+	id, err := strconv.Atoi(idstr)
+	project, err := GetModule(int(id))
+	if err != nil {
+		this.Redirect("/404.html", 302)
+	}
+	_, _, teams := ListModuleTeam(project.Id, 1, 100)
+	this.Data["teams"] = teams
+	this.Data["module"] = project
+	this.TplName = "system/module-form.tpl"
+}
+
+func (this *EditModuleController) Post() {
+	//权限检测
+	if !strings.Contains(this.GetSession("userPermission").(string), "project-edit") {
+		this.Data["json"] = map[string]interface{}{"code": 0, "message": "无权设置"}
+		this.ServeJSON()
+		return
+	}
+
+	id, _ := this.GetInt("id")
+	if id <= 0 {
+		this.Data["json"] = map[string]interface{}{"code": 0, "message": "参数出错"}
+		this.ServeJSON()
+		return
+	}
+	_, err := GetModule(id)
+	if err != nil {
+		this.Data["json"] = map[string]interface{}{"code": 0, "message": "菜单不存在"}
+		this.ServeJSON()
+		return
+	}
+
+	Name := this.GetString("Name")
+	if "" == Name {
+		this.Data["json"] = map[string]interface{}{"code": 0, "message": "请填写名称"}
+		this.ServeJSON()
+		return
+	}
+
+	Ename := this.GetString("Ename")
+	if "" == Ename {
+		this.Data["json"] = map[string]interface{}{"code": 0, "message": "请填写英文名称"}
+		this.ServeJSON()
+		return
+	}
+
+	Sort, _ := this.GetInt64("Sort")
+	if Sort <= 0 {
+		this.Data["json"] = map[string]interface{}{"code": 0, "message": "参数出错"}
+		this.ServeJSON()
+		return
+	}
+
+	Url := this.GetString("Url")
+	if "" == Url {
+		this.Data["json"] = map[string]interface{}{"code": 0, "message": "请填写英文名称"}
+		this.ServeJSON()
+		return
+	}
+
+	Icons := this.GetString("Icons")
+	if "" == Icons {
+		this.Data["json"] = map[string]interface{}{"code": 0, "message": "请填写Icons"}
+		this.ServeJSON()
+		return
+	}
+
+	var data Module
+	data.Name  = Name
+	data.Ename = Ename
+	data.Url   = Url
+	data.Icons = Icons
+	data.Sort  = Sort
+
+	err = UpdateModule(id, data)
+
+	if err == nil {
+		this.Data["json"] = map[string]interface{}{"code": 1, "message": "模块修改成功"}
+	} else {
+		this.Data["json"] = map[string]interface{}{"code": 0, "message": "模块修改失败"}
 	}
 	this.ServeJSON()
 }
