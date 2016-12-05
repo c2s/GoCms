@@ -15,11 +15,11 @@
     <!-- header section end-->
     <!-- page heading start-->
     <div class="page-heading">
-      <h3> 模块管理 </h3>
+      <h3> 菜单管理 </h3>
       <ul class="breadcrumb pull-left">
         <li> <a href="/user/show/{{.LoginUserid}}">首页</a> </li>
-        <li> <a href="/module/manage">模块管理</a> </li>
-        <li class="active"> 模块 </li>
+        <li> <a href="/module/manage">菜单管理</a> </li>
+        <li class="active"> 菜单 </li>
       </ul>
     </div>
     <!-- page heading end-->
@@ -33,13 +33,13 @@
               <form class="form-horizontal adminex-form" id="module-form">
                 <header> <b>帐号信息</b> </header>
                 <div class="form-group">
-                  <label class="col-sm-2 col-sm-2 control-label">模块名称</label>
+                  <label class="col-sm-2 col-sm-2 control-label">菜单名称</label>
                   <div class="col-sm-10">
                     <input type="text" name="Name"  value="{{.module.Name}}" class="form-control" placeholder="请填写名称">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 col-sm-2 control-label">模块英文名称</label>
+                  <label class="col-sm-2 col-sm-2 control-label">菜单英文名称</label>
                   <div class="col-sm-10">
                     <input type="text" name="Ename"  value="{{.module.Ename}}" class="form-control" placeholder="请填写英文名称">
                   </div>
@@ -51,6 +51,12 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="col-sm-2 col-sm-2 control-label">图标</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="Icons"  value="{{.module.Icons}}" class="form-control" placeholder="请填写图标">
+                  </div>
+                </div>
+                <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">排序</label>
                   <div class="col-sm-10">
                     <input type="text" name="Sort"  value="{{.module.Sort}}" class="form-control" placeholder="请填写排序">
@@ -59,6 +65,7 @@
                 <div class="form-group">
                   <label class="col-lg-2 col-sm-2 control-label"></label>
                   <div class="col-lg-10">
+                    <input type="hidden" name="id" value="{{.module.Id}}">
                     <button type="submit" class="btn btn-primary">提 交</button>
                   </div>
                 </div>
