@@ -10,7 +10,6 @@ import (
 	"net/http"
 	_ "GoCms/initial"
 	_ "GoCms/routers"
-
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 )

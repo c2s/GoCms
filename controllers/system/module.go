@@ -13,6 +13,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"strconv"
+	"log"
 )
 
 type MyModuleController struct {
@@ -30,6 +31,14 @@ func (this *ModuleManageController) Get() {
 		return
 		//this.Abort("401")
 	}
+
+
+	Id := this.GetString("Id")
+	if "" == Id {
+		log.Print(Id)
+	}
+
+
 	page, err := this.GetInt("p")
 	name := this.GetString("keywords")
 	if err != nil {
