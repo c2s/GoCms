@@ -7,12 +7,6 @@ package initial
 
 import (
 	//"fmt"
-	"GoCms/models/businesstrips"
-	"GoCms/models/expenses"
-	"GoCms/models/goouts"
-	"GoCms/models/leaves"
-	"GoCms/models/oagoods"
-	"GoCms/models/overtimes"
 	"GoCms/models/projects"
 	"GoCms/models/users"
 	"GoCms/utils"
@@ -25,12 +19,6 @@ func InitTemplate() {
 	beego.AddFuncMap("getRealname", users.GetRealname)
 	beego.AddFuncMap("getNeedsname", projects.GetProjectNeedsName)
 	beego.AddFuncMap("getProjectname", projects.GetProjectName)
-	beego.AddFuncMap("getLeaveProcess", leaves.ListLeaveApproverProcessHtml)
-	beego.AddFuncMap("getExpenseProcess", expenses.ListExpenseApproverProcessHtml)
-	beego.AddFuncMap("getBusinesstripProcess", businesstrips.ListBusinesstripApproverProcessHtml)
-	beego.AddFuncMap("getGooutProcess", goouts.ListGooutApproverProcessHtml)
-	beego.AddFuncMap("getOagoodProcess", oagoods.ListOagoodApproverProcessHtml)
-	beego.AddFuncMap("getOvertimeProcess", overtimes.ListOvertimeApproverProcessHtml)
 
 	beego.AddFuncMap("getDate", utils.GetDate)
 	beego.AddFuncMap("getDateMH", utils.GetDateMH)

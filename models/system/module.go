@@ -53,7 +53,6 @@ func ListModule(condArr map[string]string, page int, offset int) (num int64, err
 	// 0 表示父级菜单
 	cond = cond.And("parent_id", 0)
 	qs = qs.SetCond(cond)
-
 	start := (page - 1) * offset
 	qs = qs.RelatedSel()
 
@@ -61,6 +60,33 @@ func ListModule(condArr map[string]string, page int, offset int) (num int64, err
 	qs = qs.OrderBy("created")
 	num, err1 := qs.Limit(offset, start).All(&modules)
 	return num, err1, modules
+}
+
+// 根据父菜单Id获取子菜单
+func GetChildMenuByParentId(id int) (Module, error)  {
+	var menu Module
+	var err error
+
+	o := orm.NewOrm()
+	menu = Module{ParentId: id}
+	log.Print(menu)
+	err = o.Read(&menu)
+	return menu, err
+}
+
+// 获取菜单
+func GetModule(id int) (Module, error) {
+	var project Module
+	var err error
+
+	//err = utils.GetCache("GetProject.id."+fmt.Sprintf("%d", id), &project)
+	//if err != nil {
+	o := orm.NewOrm()
+	project = Module{Id: id}
+	err = o.Read(&project)
+	//utils.SetCache("GetProject.id."+fmt.Sprintf("%d", id), project, 600)
+	//}
+	return project, err
 }
 
 // 统计数量
@@ -108,20 +134,7 @@ func UpdateModule(id int, updPro Module) error {
 	_, err := o.Update(&pro, "name", "ename", "icons", "url", "sort", "updated")
 	return err
 }
-// 获取菜单
-func GetModule(id int) (Module, error) {
-	var project Module
-	var err error
 
-	//err = utils.GetCache("GetProject.id."+fmt.Sprintf("%d", id), &project)
-	//if err != nil {
-	o := orm.NewOrm()
-	project = Module{Id: id}
-	err = o.Read(&project)
-	//utils.SetCache("GetProject.id."+fmt.Sprintf("%d", id), project, 600)
-	//}
-	return project, err
-}
 
 func ListModuleTeam(projectId int, page int, offset int) (num int64, err error, ops []Module) {
 	var teams []Module
