@@ -31,16 +31,14 @@ func (this *ModuleManageController) Get() {
 		return
 		//this.Abort("401")
 	}
+	condArr := make(map[string]string)
 
-
-	Id := this.GetString("Id")
-	if "" == Id {
-		log.Print(Id)
+	pId := this.GetString("pid")
+	if pId != "" {
+		condArr["parent_id"] = pId
 	}
 
-
 	page, err := this.GetInt("p")
-	name := this.GetString("keywords")
 	if err != nil {
 		page = 1
 	}
@@ -50,9 +48,7 @@ func (this *ModuleManageController) Get() {
 		offset = 15
 	}
 
-	condArr := make(map[string]string)
-	condArr["name"] = name
-
+	log.Print(condArr)
 	countProject := CountModule(condArr)
 	paginator := pagination.SetPaginator(this.Ctx, offset, countProject)
 	_, _, module := ListModule(condArr, page, offset)

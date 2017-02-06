@@ -22,13 +22,13 @@
     <!-- header section end-->
     <!-- page heading start-->
     <div class="page-heading">
-      <h3> 菜单管理 </h3>
+      <h3> 模块管理 </h3>
       <ul class="breadcrumb pull-left">
         <li> <a href="/user/show/{{.LoginUserid}}">首页</a> </li>
-        <li> <a href="/module/manage">菜单管理</a> </li>
-        <li class="active"> 项目 </li>
+        <li> <a href="/module/manage">模块管理</a> </li>
+        <li class="active"> 模块 </li>
       </ul>
-      <div class="pull-right"><a href="/module/add" class="btn btn-success">+新菜单</a></div>
+      <div class="pull-right"><a href="/module/add" class="btn btn-success">+新模块</a></div>
     </div>
     <!-- page heading end-->
     <!--body wrapper start-->
@@ -36,31 +36,17 @@
       <div class="row">
         <div class="col-sm-12">
           <section class="panel">
-            <header class="panel-heading"> 项目 / 总数：{{.countProject}}<span class="tools pull-right"><a href="javascript:;" class="fa fa-chevron-down"></a>
+            <header class="panel-heading"> 模块 / 总数：{{.countProject}}<span class="tools pull-right"><a href="javascript:;" class="fa fa-chevron-down"></a>
               <!--a href="javascript:;" class="fa fa-times"></a-->
               </span> </header>
             <div class="panel-body">
-
-              <!--<div id="list2" class="dd" style="min-height:350px;">-->
-                <!--<ol class="dd-list">-->
-              <!--{{range $k,$v := .modules}}-->
-                  <!--<li data-id="{{$v.Id}}" class="dd-item dd3-item">-->
-                    <!--<div class="dd-handle dd3-handle"></div><div class="dd3-content">{{$v.Name}}-->
-                    <!--<span class="pull-right">-->
-						<!--<a href="/module/edit/{{$v.Id}}"><i class="fa fa-edit"></i></a></span>-->
-                  <!--</div>-->
-                    <!--</li>-->
-              <!--{{end}}-->
-
-                <!--</ol>-->
-              <!--</div>-->
               <section id="unseen">
                 <form id="project-form-list">
                   <table class="table table-bordered table-striped table-condensed">
                     <thead>
                       <tr>
-                        <th>菜单名称</th>
-                        <th>菜单英文名</th>
+                        <th>模块名称</th>
+                        <th>模块英文名</th>
 						<th>访问地址</th>
 						<th>图标</th>
                         <th>排序</th>
@@ -88,7 +74,7 @@
                             <li><a href="javascript:;" class="js-project-single" data-id="{{$v.Id}}" data-status="1">删除</a></li>
                           </ul>
                         </div>
-                        &nbsp;&nbsp;<a href="/module/manage?id={{$v.Id}}"> 子菜单</a>
+                        &nbsp;&nbsp;<a href="/module/manage?pid={{$v.Id}}">子模块</a>
                       </td>
                     </tr>
                     {{end}}
