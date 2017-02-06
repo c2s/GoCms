@@ -45,7 +45,7 @@ func init() {
 
 
 	// 角色
-	beego.Router("/role/manage", &system.ModuleManageController{})
+	beego.Router("/role/manage", &system.ManageDepartmentController{})
 
 	// 权限
 	beego.Router("/permission/manage", &system.ModuleManageController{})
@@ -54,7 +54,7 @@ func init() {
 	// 部门
 	beego.Router("/department/manage", &users.ManageDepartmentController{})
 	beego.Router("/department/ajax/status", &users.AjaxStatusDepartmentController{})
-	beego.Router("/department/edit/:id", &users.EditDepartmentController{})
+	beego.Router("/department/edit/ :id", &users.EditDepartmentController{})
 	beego.Router("/department/add", &users.AddDepartmentController{})
 
 	// 职位

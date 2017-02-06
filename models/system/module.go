@@ -43,15 +43,20 @@ func ListModule(condArr map[string]string, page int, offset int) (num int64, err
 	o.Using("default")
 	qs := o.QueryTable(models.TableName("system_module"))
 	cond := orm.NewCondition()
-	qs = qs.SetCond(cond)
 	if page < 1 {
 		page = 1
 	}
 	if offset < 1 {
 		offset, _ = beego.AppConfig.Int("pageoffset")
 	}
-	// 0 表示父级菜单
-	cond = cond.And("parent_id", 0)
+
+	if condArr["parent_id"] != "" {
+		cond = cond.And("parent_id", condArr["parent_id"])
+	} else {
+		// 0 表示父级菜单
+		cond = cond.And("parent_id", 0)
+	}
+
 	qs = qs.SetCond(cond)
 	start := (page - 1) * offset
 	qs = qs.RelatedSel()
@@ -93,11 +98,15 @@ func GetModule(id int) (Module, error) {
 func CountModule(condArr map[string]string) int64 {
 	o := orm.NewOrm()
 	qs := o.QueryTable(models.TableName("system_module"))
-	log.Print(qs)
 	qs = qs.RelatedSel()
 	cond := orm.NewCondition()
-	// 0 表示父级菜单
-	cond = cond.And("parent_id", 0)
+	if condArr["parent_id"] != "" {
+		cond = cond.And("parent_id", condArr["parent_id"])
+	} else {
+		// 0 表示父级菜单
+		cond = cond.And("parent_id", 0)
+	}
+	qs = qs.SetCond(cond)
 	num, _ := qs.SetCond(cond).Count()
 	return num
 }
